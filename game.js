@@ -9,7 +9,8 @@ var direction = 'left';
 process.stdin.on('keypress', function (ch, key) {
   
   if (key && key.ctrl && key.name == 'c') {
-    process.stdin.pause();
+    process.stdout.write('\033c');
+    process.exit(1);
   }
   getDirection(key.name);
 }); 
@@ -32,7 +33,7 @@ var arena = '';
 
 
 function drawArena() {
-for(var i = 0; i <15; i++) {
+for(var i = 0; i <10; i++) {
     if(i == 7) {
       if(direction === 'left')
         arena += lines + car + space + lines + '\n';
@@ -52,7 +53,7 @@ for(var i = 0; i <15; i++) {
             setInterval(function() {
             arena = '';  
 
-              process.stdout.write('\033c');
+              process.stdout.write('\033[2f');
               console.log(drawArena()); 
             }, 100 );
         })(); 

@@ -32,10 +32,16 @@ var compCar = [" [] ", "    "];
 var animationCounter = 0;
 var circuitBuilder = [];
 var toggle = false;
+var score = 0;
+var lives = 3;
+var level = 1;
+var levelTimer = 0;
+var interval = 100;
+
 function initializeCircuit() {
   for(var i = 0; i <10; i++) {
-    circuitBuilder[i] = lines + space + space + lines + '\n';
-    circuit += circuitBuilder[i];  
+    circuitBuilder[i] = lines + space + space + lines;
+    circuit += circuitBuilder[i] + '\n';  
   }
   return circuit;
 }
@@ -48,10 +54,10 @@ function launchCar(animationCounter) {
 
  // circuitBuilder.pop();
  // circuitBuilder.pop();
- if(animationCounter == 2)
-    circuitBlock = lines + compCar[0] + compCar[1] + lines + '\n';
+ if(animationCounter == 1)
+    circuitBlock = lines + compCar[0] + compCar[1] + lines;
   else
-    circuitBlock = lines + space + space + lines + '\n';
+    circuitBlock = lines + space + space + lines;
  // circuitBuilder.unshift(lines + space + space + lines + '\n')
   circuitBuilder.unshift(circuitBlock);
  // circuitBuilder.unshift(lines + space + space + lines + '\n');
@@ -59,16 +65,50 @@ function launchCar(animationCounter) {
 
 function drawCircuit() {
 
-  
+  //circuitBuilder[0] = circuitBuilder[0] + "  SCORE";
+ // circuitBuilder[1] += "  1";
+ // circuitBuilder[2] += "  LIVES";
+ // circuitBuilder[3] += "  2";
+
 
   for(var i = 0; i <10; i++) {
+
     if(i == 7) {
-          if(direction === 'left')
-            circuit += lines + car + space + lines + '\n';
-          else
-            circuit += lines + space + car + lines + '\n'; 
+          if(direction === 'left') {
+            var myCarBlock = lines + car + space + lines;
+             if(circuitBuilder[i] === myCarBlock)
+               gameOver();
+             else
+              circuit += lines + car + space + lines + '\n';
+          }
+          else {
+            var myCarBlock = lines + space + car + lines;
+             if(circuitBuilder[i] === myCarBlock)
+               gameOver();
+             else
+              circuit += lines + space + car + lines + '\n'; 
+          }
         }
-    circuit += circuitBuilder[i];
+      switch(i) {
+
+        case 0: circuit += circuitBuilder[i] + '\tSCORE' + '\n';
+                break;
+        case 1: circuit += circuitBuilder[i] + '\t'+score + '\n';
+                break;
+        case 2: circuit += circuitBuilder[i] + '\tLIVES' + '\n';
+                break;
+        case 3: circuit += circuitBuilder[i] + '\t' + lives + '\n';
+                break;
+        case 4: circuit += circuitBuilder[i] + '\tLEVEL' + '\n';
+                break;
+        case 5: circuit += circuitBuilder[i] + '\t' + level + '\n';
+                break;
+        case 5: circuit += circuitBuilder[i] + '\t' + level + '\n';
+                break;
+        default: circuit += circuitBuilder[i] + '\n';
+      }
+    //  circuit += circuitBuilder[i] + '\tSCORE' +  '\n';
+
   }
   //circuit = circuitBuilder.toString();
   //carPos = i;
@@ -80,31 +120,46 @@ function drawCircuit() {
   // }
   return circuit;
 }
+var animator;
+function endAnimation() {
+  clearInterval(animator);
+
+}
 
 
-(function()
-        {   process.stdout.write('\033c');
-            console.log(initializeCircuit());
-            setInterval(function() {
-              animationCounter++;
-              if(animationCounter > 5) {
-                toggle = !toggle;
-                animationCounter = 0;
-              }
-              launchCar(animationCounter);
-                
+function initializeGame() {   
+  process.stdout.write('\033c');
+  console.log(initializeCircuit());
+  endAnimation(interval);
+  
+}
 
-              shuffle(compCar);
-              // }
-                
-              // else
-              //   carPos++;
-              circuit = '';  
+function startAnimation(interval) {
+  animator = setInterval(gameLogic, interval );
+}
 
-              process.stdout.write('\033[2f');
-              console.log(drawCircuit()); 
-            }, 100 );
-        })(); 
+function gameLogic() {
+    animationCounter++;
+    if(animationCounter > 3) {
+      toggle = !toggle;
+      animationCounter = 0;
+    }
+    launchCar(animationCounter);
+    score++;
+    if(levelTimer > 100) {
+      levelTimer = 0;
+      level++;
+      interval -= 10;
+      gameOver();
+      startAnimation(interval);
+    }
+    levelTimer++;
+    shuffle(compCar);
+    circuit = '';  
+
+    process.stdout.write('\033[2f');
+    console.log(drawCircuit()); 
+}
 
 function getDirection(dir) {
    
@@ -131,4 +186,6 @@ function shuffle(array) {
 
     return array;
 }
+
+initializeGame();
 

@@ -12,6 +12,11 @@
     },
     "author": "Prashant Baid",
     "license": "MIT",
+    "keywords": [
+      "game",
+      "command line game",
+      "road fighter"
+    ],
     "bugs": {
         "url": "https://github.com/prashantbaid/nodefighter/issues"
     },

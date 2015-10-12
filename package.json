@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/prashantbaid/node-console-game",
   "dependencies": {
+    "chalk": "^1.1.1",
     "keypress": "^0.2.1"
   }
 }

@@ -1,6 +1,6 @@
 {
     "name": "nodefighter",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "A simple game inspired by the famous Road Fighter that runs in command line",
     "main": "game.js",
     "scripts": {

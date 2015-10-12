@@ -1,7 +1,7 @@
 {
-    "name": "noderunner",
+    "name": "nodefighter",
     "version": "0.1.0",
-    "description": "A simple game written in nodejs for command-line.",
+    "description": "A simple game inspired by the famous road fighter that runs in command line",
     "main": "game.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,6 @@
         "keypress": "^0.2.1"
     },
     "bin": {
-        "noderunner": "game.js"
+        "nodefighter": "game.js"
     }
 }

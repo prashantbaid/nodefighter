@@ -1,2 +1,2 @@
 # node-console-game
-A simple game written for nodejs console
+A command line game similar to Road Fighter written in node.js

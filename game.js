@@ -1,6 +1,7 @@
 var keypress = require('keypress');
 var chalk = require('chalk');
 var tty = require('tty');
+var fs = require('fs');
 
 var splashScreen = 
 
@@ -24,10 +25,6 @@ var splashScreen =
 "█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗\n"+
 "╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝\n\n"
 
-console.log(chalk.red(splashScreen));
-console.log('\n'+ chalk.bold.red('\t\tPress enter to start') + '\n\n')
-console.log(chalk.red('\t  Use left and right arrows to move'));
-console.log('\n\n'+ chalk.bold.red('\t\t     Created By ') + '\n' + chalk.bold.red('\t\t   Prashant Baid'));
 
 
 
@@ -52,13 +49,30 @@ var treeGenerator = [chalk.bgBlack("   "), tree];
 var animationCounter = 0;
 var circuitBuilder = [];
 var score = 0;
-var lives = 3;
 var level = 1;
 var levelTimer = 0;
 var interval = 100;
 var startFlag = false;
 var circuitLength = 18;
+var message = '';
+var message2 = '';
 var zebra = chalk.white.bgGreen("||");
+var continueFlag = false;
+var highscore = 0;
+
+
+function displaySplashScreen() {
+  circuit = '';
+  endAnimation();
+  process.stdout.write('\033c');
+  console.log(chalk.red(splashScreen));
+  console.log('\n'+ chalk.bold.red('\t\tPress enter to start') + '\n\n')
+  console.log(chalk.red('\t  Use left and right arrows to move'));
+  console.log('\n\n'+ chalk.bold.red('\t\t     Created By ') + '\n' + chalk.bold.red('\t\t   Prashant Baid'));
+  startFlag = false;
+}
+
+displaySplashScreen();
 
 
 // listen for the "keypress" event
@@ -67,7 +81,7 @@ process.stdin.on('keypress', function (ch, key) {
   if (key && key.ctrl && key.name == 'c') {
       exitGame();
   }
-  switch(key.name.toLowerCase()) {
+  switch(key.name) {
     case 'left' : direction = 'left';
                   break;
     case 'right': direction = 'right';
@@ -76,18 +90,16 @@ process.stdin.on('keypress', function (ch, key) {
                   break;
     case 'x': exitGame();
               break;
-    case 'y': initializeGame();
+    case 'space': displaySplashScreen();
+              break;
+    case 'X': exitGame();
               break;
   }
   //if(key && key.ctrl && (key.name == 'left' || key.name == 'right'))
     //getDirection(key.name);
 }); 
 
-if (typeof process.stdin.setRawMode == 'function') {
-  process.stdin.setRawMode(true);
-} else {
-  tty.setRawMode(true);
-}
+process.stdin.setRawMode(true);
 process.stdin.resume();
 function exitGame() {
   process.stdout.write('\033c');
@@ -100,7 +112,7 @@ function initializeCircuit() {
     circuit += lines + circuitBuilder[i] + lines + '\n';  
   }
   circuit += '\n\n\n\n\t    ' + chalk.bold.red('Press X to quit');
-  circuit += '\n\t   ' + chalk.bold.red('Press Y to restart');
+  circuit += '\n        ' + chalk.bold.red('Press spacebar to restart');
   return circuit;
 }
 
@@ -130,6 +142,9 @@ function launchCar(animationCounter) {
 
 function drawCircuit() {
 
+
+ process.stdin.setRawMode(true);
+  process.stdin.resume();
   //circuitBuilder[0] = circuitBuilder[0] + "  SCORE";
  // circuitBuilder[1] += "  1";
  // circuitBuilder[2] += "  LIVES";
@@ -141,15 +156,23 @@ function drawCircuit() {
     if(i == myCarPos) {
           if(direction === 'left') {
             var myCarBlock = racingCar + zebra + space;
-             if(circuitBuilder[i] === myCarBlock)
-               dead();
+             if(circuitBuilder[i] === myCarBlock) {
+                if(score > highscore)
+                  highscore = score;
+                dead();
+             }
+              
              else
               circuit += lines + trackSpace + chalk.black.bgGreen("o")+chalk.bgRed("||")+chalk.black.bgGreen("o") + trackSpace + zebra + space + lines + '\n';
           }
           else if(direction === 'right') {
             var myCarBlock = space + zebra + racingCar;
-             if(circuitBuilder[i] === myCarBlock)
-               dead();
+             if(circuitBuilder[i] === myCarBlock) {
+              if(score > highscore)
+                  highscore = score;
+              dead();
+             }
+               
              else
               circuit += lines + space + zebra + trackSpace + chalk.black.bgGreen("o")+chalk.bgRed("||")+chalk.black.bgGreen("o") + trackSpace + lines + '\n'; 
           }
@@ -160,15 +183,13 @@ function drawCircuit() {
                 break;
         case 1: circuit += lines + circuitBuilder[i] + lines + '   '+ chalk.red(score) + '\n';
                 break;
-        case 2: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.red('LIVES') + '\n';
+        case 2: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.red('LEVEL') + '\n';
                 break;
-        case 3: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(lives) + '\n';
+        case 3: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(level) + '\n';
                 break;
-        case 4: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.red('LEVEL') + '\n';
+        case 4: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.red('HIGHSCORE') + '\n';
                 break;
-        case 5: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(level) + '\n';
-                break;
-        case 6: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.red('HIGHSCORE') + '\n';
+        case 5: circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(highscore) + '\n';
                 break;
         default: circuit += lines + circuitBuilder[i] + lines + '\n';
       }
@@ -187,7 +208,24 @@ function resetAnimation() {
 }
 
 function dead() {
+  circuit = '';
+  console.log(chalk.bold.red('\n\n\n\n\n\n\n\n\t\tGAME OVER'));
   endAnimation();
+  var highscore = {"highscore" : score};
+  fs.stat('highscore.json', function(err, stat) {
+    if(err) {
+      
+      fs.writeFileSync('highscore.json', JSON.stringify(highscore));
+    }
+    else {
+      var hs = JSON.parse(fs.readFileSync('highscore.json').toString());
+      if(hs.highscore < score) {
+        fs.writeFileSync('highscore.json', JSON.stringify(highscore));
+        highscore = score;
+      }
+    }
+  });
+  
 }
 
 
@@ -198,10 +236,23 @@ function initializeGame() {
   lives = 3;
   circuit = '';
   levelTimer = 0;
+  highscore = getHighScore();
   process.stdout.write('\033c');
   console.log(initializeCircuit());
   startAnimation(interval);
   
+}
+
+function getHighScore() {
+  fs.stat('highscore.json', function(err, stat) {
+    if(err) {
+      highscore = 0;
+    }
+    else {
+      var hs = JSON.parse(fs.readFileSync('highscore.json').toString());
+      highscore = hs.highscore;
+    }
+  });
 }
 
 function startAnimation(interval) {
@@ -209,7 +260,9 @@ function startAnimation(interval) {
 }
 
 function gameLogic() {
-  shuffle(treeGenerator);
+
+  process.stdin.setRawMode(true);
+  process.stdin.resume();
   //lines = chalk.dim.bgYellow(" ") + chalk.bgBlack("| ") + treeGenerator[0] + chalk.bgBlack(" |") + chalk.dim.bgYellow(" ");
     animationCounter++;
     if(animationCounter > 4) {
@@ -217,7 +270,7 @@ function gameLogic() {
     }
     launchCar(animationCounter);
     score++;
-    if(levelTimer > 100) {
+    if(levelTimer > 150) {
       levelTimer = 0;
       level++;
       interval -= 10;
@@ -229,6 +282,9 @@ function gameLogic() {
 
     process.stdout.write('\033[2f');
     console.log(drawCircuit()); 
+
+    
+
 }
 
 function getDirection(dir) {

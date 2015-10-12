@@ -1,21 +1,21 @@
 {
     "name": "nodefighter",
-    "version": "0.1.0",
-    "description": "A simple game inspired by the famous road fighter that runs in command line",
+    "version": "0.1.1",
+    "description": "A simple game inspired by the famous Road Fighter that runs in command line",
     "main": "game.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/prashantbaid/node-console-game.git"
+        "url": "https://github.com/prashantbaid/nodefighter.git"
     },
     "author": "Prashant Baid",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/prashantbaid/node-console-game/issues"
+        "url": "https://github.com/prashantbaid/nodefighter/issues"
     },
-    "homepage": "https://github.com/prashantbaid/node-console-game",
+    "homepage": "https://github.com/prashantbaid/nodefighter",
     "dependencies": {
         "chalk": "^1.1.1",
         "keypress": "^0.2.1"

@@ -94,7 +94,7 @@ function displaySplashScreen() {
     console.log(chalk.red(splashScreen));
     console.log('\n' + chalk.bold.red('\t\tPress enter to start') + '\n\n')
     console.log(chalk.red('\t  Use left and right arrows to move'));
-    console.log('\n\n' + chalk.dim.red('\t\t    Created  By') + '\n' + chalk.dim.red('\t\t   Prashant Baid'));
+    console.log('\n\n' + chalk.red('\t\t    Created  By') + '\n' + chalk.red('\t\t   Prashant Baid'));
     startFlag = false;
 }
 
@@ -260,19 +260,19 @@ function drawCircuit() {
         switch (i) {
 
             case 0:
-                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.bgYellow.red(' SCORE ') + '\n';
+                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bgYellow.red(' SCORE ') + '\n';
                 break;
             case 1:
                 circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(score) + '\n';
                 break;
             case 2:
-                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.bgYellow.red(' LEVEL ') + '\n';
+                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bgYellow.red(' LEVEL ') + '\n';
                 break;
             case 3:
                 circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(level) + '\n';
                 break;
             case 4:
-                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bold.bgYellow.red(' HIGHSCORE ') + '\n';
+                circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.bgYellow.red(' HIGHSCORE ') + '\n';
                 break;
             case 5:
                 circuit += lines + circuitBuilder[i] + lines + '   ' + chalk.red(highscore) + '\n';

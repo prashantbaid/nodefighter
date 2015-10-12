@@ -19,13 +19,13 @@ Use left and right arrow keys to move the car
 
 ## Screenshots
 
-### Splashscreen
+**Splashscreen**
 
 ![Alt text](/screenshots/screenshot1.png?raw=true)
 
 
 ---
 
-### Game
+**Game**
 
 ![Alt text](/screenshots/gameplay.png?raw=true)

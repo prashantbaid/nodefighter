@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var keypress = require('keypress');
 var chalk = require('chalk');
 var tty = require('tty');
@@ -28,7 +30,7 @@ var splashScreen =
 var direction = 'left';
 var car = chalk.black.bgGreen("o") + chalk.bgBlue("||") + chalk.black.bgGreen("o");
 var trackSpace = chalk.bgGreen("   ");
-var lines = chalk.dim.bgBlack(" ") + chalk.bgYellow.black("|   |") + chalk.dim.bgBlack(" ");
+var lines = chalk.bgBlack(" ") + chalk.bgYellow.black("|   |") + chalk.bgBlack(" ");
 var space = chalk.bgGreen("          ");
 var racingCar = trackSpace + car + trackSpace;
 var circuit = '';

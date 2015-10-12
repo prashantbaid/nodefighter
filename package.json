@@ -1,23 +1,26 @@
 {
-  "name": "NodeBoy",
-  "version": "0.0.1",
-  "description": "A simple game written in nodejs for command-line.",
-  "main": "game.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/prashantbaid/node-console-game.git"
-  },
-  "author": "Prashant Baid",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/prashantbaid/node-console-game/issues"
-  },
-  "homepage": "https://github.com/prashantbaid/node-console-game",
-  "dependencies": {
-    "chalk": "^1.1.1",
-    "keypress": "^0.2.1"
-  }
+    "name": "noderunner",
+    "version": "0.1.0",
+    "description": "A simple game written in nodejs for command-line.",
+    "main": "game.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/prashantbaid/node-console-game.git"
+    },
+    "author": "Prashant Baid",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/prashantbaid/node-console-game/issues"
+    },
+    "homepage": "https://github.com/prashantbaid/node-console-game",
+    "dependencies": {
+        "chalk": "^1.1.1",
+        "keypress": "^0.2.1"
+    },
+    "bin": {
+        "noderunner": "game.js"
+    }
 }

@@ -22,4 +22,4 @@ Use left and right arrow keys to move the car
 
 ![Alt text](/screenshots/screenshot1.png?raw=true)
 
-![Alt text](/screenshots/screenshot.png?raw=true)
+![Alt text](/screenshots/gameplay.png?raw=true)
